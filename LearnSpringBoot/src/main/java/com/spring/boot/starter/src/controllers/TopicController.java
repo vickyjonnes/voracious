@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.boot.starter.src.models.Topic;
 import com.spring.boot.starter.src.services.TopicService;
 /*
-	This is a deo controller which will controll the requests in this project
+	This is a demo controller which will control the requests in this project
 */
 @RestController
 public class TopicController {
