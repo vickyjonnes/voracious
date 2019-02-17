@@ -3,3 +3,6 @@
 /RemoteSystemsTempFiles
 /LearnSpringBoot/target
 /LearnSpringBoot/.settings
+/SpringBootWithDatabase/.settings
+/SpringBootWithDatabase/target
+/SpringBootWithDatabase/derby.log

@@ -1,4 +1,4 @@
-package com.spring.boot.starter.src.controllers;
+package com.spring.boot.data.src.controllers;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.boot.starter.src.models.Topic;
-import com.spring.boot.starter.src.services.TopicService;
+import com.spring.boot.data.src.models.Topic;
+import com.spring.boot.data.src.services.TopicService;
 /*
 	This is a demo controller which will control the requests in this project
 */
@@ -37,7 +37,7 @@ public class TopicController {
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/topics/{id}")
 	public String updateTopic(@RequestBody Topic topic, @PathVariable String id) {
-		return topicService.updateTopic(topic,id)? "Succefully updated Topic" : "Failed to update";
+		return topicService.updateTopic(topic)? "Succefully updated Topic" : "Failed to update";
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/topics/delete/{id}")
