@@ -6,3 +6,8 @@
 /SpringBootWithDatabase/.settings
 /SpringBootWithDatabase/target
 /SpringBootWithDatabase/derby.log
+/SpringBootWithMongoDb/target
+/SpringBootWithMongoDb/.settings
+/SpringBootWithMongoDb/.mvn
+/SpringBootWithMongoDb/mvnw
+/SpringBootWithMongoDb/mvnw.bat
