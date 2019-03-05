@@ -1,12 +1,26 @@
 package com.vickyjonnes.mongo.src.SpringBootWithMongoDb.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.mockito.exceptions.misusing.FriendlyReminderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.model.GridFSDownloadOptions;
+import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import com.mongodb.gridfs.GridFS;
 import com.vickyjonnes.mongo.src.SpringBootWithMongoDb.model.UserDocument;
 import com.vickyjonnes.mongo.src.SpringBootWithMongoDb.repository.UserRepository;
 
@@ -15,6 +29,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository repo;
+	@Autowired
+	private GridFSBucket bucket;
+	
 	public String insertDocument(UserDocument user) {
 		return repo.insert(user)!=null?"Sucess":"Fail";
 	}
@@ -42,6 +59,31 @@ public class UserService {
 	
 	public List<UserDocument> fetchAllDocuments() {
 		return repo.findAll();
+	}
+
+	public String storeFileToDb() {
+		String fileId="No Id";
+		try(InputStream stream=new FileInputStream(new File("C:\\Users\\mohammad.faizan\\Desktop\\lakshdweep.txt"))) {
+			GridFSUploadOptions options = new GridFSUploadOptions()
+                    .chunkSizeBytes(17000)
+                    .metadata(new Document("type", "data"));
+			 ObjectId objId = bucket.uploadFromStream("lakshadweep-trip-data", stream, options);
+			 fileId=objId.toString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return fileId;
+	}
+
+	public String downloadFile() {
+		boolean isException=false;
+		try(FileOutputStream stream=new FileOutputStream(new File("C:\\Users\\mohammad.faizan\\Desktop\\download\\lakshdweep.txt"))){
+			GridFSDownloadOptions options=new GridFSDownloadOptions().revision(0);
+			bucket.downloadToStream("lakshadweep-trip-data", stream, options);
+		}catch(IOException e) {
+			isException=true;
+		}
+		return isException? "Failes":"Success";
 	}
 	
 	

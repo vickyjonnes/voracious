@@ -38,14 +38,24 @@ public class UserController {
 		return userService.saveDocuments(users);
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="documents/delete/{id}")
+	@RequestMapping(method=RequestMethod.DELETE, value="/documents/delete/{id}")
 	public void deleteDocumentById(@PathVariable Integer id) {
 		userService.deleteDocumentById(id);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="documents/find/{id}")
+	@RequestMapping(method=RequestMethod.GET, value="/documents/find/{id}")
 	public UserDocument fetchDocumentById(@PathVariable Integer id) {
 		return userService.fetchDocumentById(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/documents/file/save")
+	public String saveFileToMongoDb() {
+		return userService.storeFileToDb();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET,value="/documents/file/download")
+	public String dowbloadFileFromMongo() {
+		return userService.downloadFile();
 	}
 	
 }

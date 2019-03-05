@@ -3,7 +3,6 @@ package com.vickyjonnes.mongo.src.SpringBootWithMongoDb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 
 @PropertySource("classpath:/properties/application_${spring.profiles.active}.properties")
 @SpringBootApplication
