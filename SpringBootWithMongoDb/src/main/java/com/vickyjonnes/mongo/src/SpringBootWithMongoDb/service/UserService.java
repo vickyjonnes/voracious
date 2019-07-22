@@ -2,25 +2,19 @@ package com.vickyjonnes.mongo.src.SpringBootWithMongoDb.service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.function.Supplier;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.mockito.exceptions.misusing.FriendlyReminderException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.model.GridFSDownloadOptions;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
-import com.mongodb.gridfs.GridFS;
 import com.vickyjonnes.mongo.src.SpringBootWithMongoDb.model.UserDocument;
 import com.vickyjonnes.mongo.src.SpringBootWithMongoDb.repository.UserRepository;
 
