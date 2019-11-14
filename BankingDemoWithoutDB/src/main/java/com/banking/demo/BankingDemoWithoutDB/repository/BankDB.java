@@ -13,7 +13,7 @@ import com.banking.demo.BankingDemoWithoutDB.model.Account;
 @Repository
 public class BankDB implements BankRepository{
 
-	final Map<Integer, Account> map=new ConcurrentHashMap<>();
+	private final Map<Integer, Account> map=new ConcurrentHashMap<>();
 	@Override
 	public double checkBalance(Integer accountNumber) {
 		if(Objects.nonNull(map.get(accountNumber)))
@@ -23,14 +23,23 @@ public class BankDB implements BankRepository{
 
 	@Override
 	public void setNewBalance(Integer accountNumber, double amount) {
+		Account acc=null;
 		if(Objects.nonNull(map.get(accountNumber)))
+			acc=map.get(accountNumber);
+		synchronized (acc) {
 			map.get(accountNumber).setBalance(amount);
+		}	
+		
 	}
 
 	@Override
 	public void deactivateAccount(Integer accountNumber) {
+		Account acc=null;
 		if(Objects.nonNull(map.get(accountNumber)))
+			acc=map.get(accountNumber);
+		synchronized (acc) {
 			map.get(accountNumber).setActiveStatus(false);
+		}
 	}
 
 	@Override
