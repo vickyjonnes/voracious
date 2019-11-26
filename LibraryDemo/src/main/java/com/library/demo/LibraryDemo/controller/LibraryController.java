@@ -67,4 +67,10 @@ public class LibraryController {
 	public List<Book> getAllBooks(){
 		return library.getAllBooks();
 	}
+	
+	@GetMapping(path="/allUsers")
+	public List<User> getAllUsers(){
+		return library.getAllUsers();
+	}
+	
 }
