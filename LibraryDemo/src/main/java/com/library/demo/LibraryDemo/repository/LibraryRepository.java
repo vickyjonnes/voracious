@@ -14,4 +14,6 @@ public interface LibraryRepository {
 	public Book checkAvailability(int bookId);
 	public BookStatus getTransaction(Transaction txn);
 	public List<Book> getAllBooks();
+	public List<User> getAllUsers();
+	public boolean isValidUser(int userId);
 }

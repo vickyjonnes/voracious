@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
@@ -19,26 +20,28 @@ public class LibraryRepositoryImpl implements LibraryRepository {
 	private final static Map<Integer, Book> bookStore=new ConcurrentHashMap<>();
 	private final static Map<Integer, User> userStore=new ConcurrentHashMap<>();
 	private final static Map<Transaction, BookStatus> txnStore=new ConcurrentHashMap<>();
-	
+	private final static AtomicInteger USER_SEQ=new AtomicInteger();
+	private final static AtomicInteger BOOK_SEQ=new AtomicInteger();
 	static {
 		//prepopulate few books
-		bookStore.put(1, new Book(1, "Data Structure", BookStatus.AVAILABLE));
-		bookStore.put(2, new Book(2, "Alchemist", BookStatus.AVAILABLE));
-		bookStore.put(3, new Book(3, "Discovery", BookStatus.AVAILABLE));
-		bookStore.put(4, new Book(4, "Love Story", BookStatus.AVAILABLE));
-		bookStore.put(5, new Book(5, "Monk", BookStatus.AVAILABLE));
+		bookStore.put(BOOK_SEQ.incrementAndGet(), new Book(BOOK_SEQ.get(), "Data Structure", BookStatus.AVAILABLE));
+		bookStore.put(BOOK_SEQ.incrementAndGet(), new Book(BOOK_SEQ.get(), "Alchemist", BookStatus.AVAILABLE));
+		bookStore.put(BOOK_SEQ.incrementAndGet(), new Book(BOOK_SEQ.get(), "Discovery", BookStatus.AVAILABLE));
+		bookStore.put(BOOK_SEQ.incrementAndGet(), new Book(BOOK_SEQ.get(), "Love Story", BookStatus.AVAILABLE));
+		bookStore.put(BOOK_SEQ.incrementAndGet(), new Book(BOOK_SEQ.get(), "Monk", BookStatus.AVAILABLE));
 		
 		//prepopulate few users as well
 		
-		userStore.put(1, new User(1, "Vipul"));
-		userStore.put(2, new User(2, "Faizan"));
-		userStore.put(3, new User(3, "Uday"));
-		userStore.put(4, new User(4, "Atul"));
-		userStore.put(5, new User(5, "Varun"));
+		userStore.put(USER_SEQ.incrementAndGet(), new User(USER_SEQ.get(),"Vipul"));
+		userStore.put(USER_SEQ.incrementAndGet(), new User(USER_SEQ.get(),"Faizan"));
+		userStore.put(USER_SEQ.incrementAndGet(), new User(USER_SEQ.get(),"Uday"));
+		userStore.put(USER_SEQ.incrementAndGet(), new User(USER_SEQ.get(),"Atul"));
+		userStore.put(USER_SEQ.incrementAndGet(), new User(USER_SEQ.get(),"Varun"));
 	}
 	
 	@Override
 	public boolean createAccount(User user) {
+		user.setUserId(USER_SEQ.incrementAndGet());
 		return userStore.putIfAbsent(user.getUserId(), user)==null?true:false;
 	}
 
@@ -76,4 +79,16 @@ public class LibraryRepositoryImpl implements LibraryRepository {
 		return bookStore.values().stream().collect(Collectors.toList());
 	}
 
+	@Override
+	public List<User> getAllUsers() {
+		return userStore.values().stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean isValidUser(int userId) {
+		return userStore.containsKey(userId);
+	}
+
+	
+	
 }

@@ -32,7 +32,11 @@ public class LibraryService {
 		if(Objects.isNull(book)){
 			return "Book is not available";
 		}
-
+		
+		if(!bookDb.isValidUser(txn.getUserId())) {
+			return "Not a valid user";
+		}
+		
 		BookStatus status=book.getStatus();
 
 		if(BookStatus.AVAILABLE==status) {
@@ -50,6 +54,10 @@ public class LibraryService {
 			return "Book is not available";
 		}
 
+		if(!bookDb.isValidUser(txn.getUserId())) {
+			return "Not a valid user";
+		}
+		
 		BookStatus status=book.getStatus();
 
 		if(BookStatus.RESERVED==status) {
@@ -71,6 +79,10 @@ public class LibraryService {
 			return "Book is not available";
 		}
 
+		if(!bookDb.isValidUser(txn.getUserId())) {
+			return "Not a valid user";
+		}
+		
 		BookStatus status=book.getStatus();
 
 		if(BookStatus.AVAILABLE==status) {
@@ -91,6 +103,10 @@ public class LibraryService {
 			return "Book is not available";
 		}
 
+		if(!bookDb.isValidUser(txn.getUserId())) {
+			return "Not a valid user";
+		}
+		
 		BookStatus status=book.getStatus();
 
 		if(BookStatus.ISSUED==status) {
@@ -102,5 +118,9 @@ public class LibraryService {
 	
 	public List<Book> getAllBooks(){
 		return bookDb.getAllBooks();
+	}
+	
+	public List<User> getAllUsers(){
+		return bookDb.getAllUsers();
 	}
 }
